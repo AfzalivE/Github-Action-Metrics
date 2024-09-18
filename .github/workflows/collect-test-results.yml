@@ -5,8 +5,7 @@ on:
     branches:
       - main
     paths-ignore:
-      - 'test_data.json'
-      - 'path/to/frontend/**' # If your frontend files are in a specific directory
+      - 'docs/**' # If your frontend files are in a specific directory
 
 jobs:
   collect-test-results:
@@ -38,6 +37,7 @@ jobs:
           mkdir -p test-results
           find . -type f -name "TEST-*.xml" -exec cp {} test-results/ \;
           python parse_test_results.py
+          mv test_data.json docs/test_data.json
 
       # Commit and push the updated test_data.json
       - name: Commit Test Data
@@ -45,7 +45,7 @@ jobs:
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
-          git add test_data.json
+          git add docs/test_data.json
           git commit -m "Update test data"
           git push
         env:

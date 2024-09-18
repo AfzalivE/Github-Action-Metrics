@@ -1,4 +1,4 @@
-fetch('../test_data.json')
+fetch('./test_data.json')
   .then(response => response.json())
   .then(data => {
     const timestamps = data.map(entry => new Date(entry.timestamp).toLocaleString());
