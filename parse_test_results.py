@@ -1,6 +1,7 @@
 import xml.etree.ElementTree as ET
 import json
 import os
+import sys
 from datetime import datetime
 
 def parse_xml_files():
@@ -49,19 +50,23 @@ def parse_testsuite(testsuite):
         print(f"Error parsing testsuite: {e}")
         return None
 
-def update_data_file(results):
-    data_file = 'test_data.json'
-    if os.path.exists(data_file):
-        with open(data_file, 'r') as f:
+def update_data_file(results, data_file_path):
+    if os.path.exists(data_file_path):
+        with open(data_file_path, 'r') as f:
             data = json.load(f)
     else:
         data = []
 
     data.extend(results)
 
-    with open(data_file, 'w') as f:
+    with open(data_file_path, 'w') as f:
         json.dump(data, f, indent=2)
 
 if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        print("Usage: python parse_test_results.py <path_to_test_data.json>")
+        sys.exit(1)
+
+    data_file_path = sys.argv[1]
     results = parse_xml_files()
-    update_data_file(results)
+    update_data_file(results, data_file_path)

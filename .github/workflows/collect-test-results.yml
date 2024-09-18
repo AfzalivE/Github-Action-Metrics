@@ -36,8 +36,7 @@ jobs:
         run: |
           mkdir -p test-results
           find . -type f -name "TEST-*.xml" -exec cp {} test-results/ \;
-          python parse_test_results.py
-          mv test_data.json docs/test_data.json
+          python parse_test_results.py docs/test_data.json
 
       # Commit and push the updated test_data.json
       - name: Commit Test Data
