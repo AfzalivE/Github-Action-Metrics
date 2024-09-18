@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Cases Statistics</title>
+  <!-- Include Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Include the date adapter for Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+</head>
+<body>
+  <h1>Test Cases Statistics Over Time</h1>
+  <nav>
+    <a href="index.html">Suite Stats</a> | <a href="testcases.html">Test Case Stats</a>
+  </nav>
+  
+  <!-- Time Period Selection -->
+  <label for="timePeriodSelect">Select Time Period:</label>
+  <select id="timePeriodSelect">
+    <option value="Minute">Minute</option>
+    <option value="Hour">Hour</option>
+    <option value="Day">Day</option>
+    <option value="Week">Week</option>
+  </select>
+  
+  <!-- Test Case Filter -->
+  <input type="text" id="searchInput" placeholder="Filter test cases..." />
+  
+  <!-- Chart Canvas -->
+  <canvas id="testCasesChart" width="800" height="400"></canvas>
+  
+  <!-- Script Reference -->
+  <script src="testcases.js"></script>
+</body>
+</html>
