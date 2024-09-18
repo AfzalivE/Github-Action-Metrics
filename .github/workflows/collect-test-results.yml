@@ -33,6 +33,7 @@ jobs:
 
       # Parse the test results
       - name: Parse Test Results
+        if: ${{ always() }}
         run: |
           mkdir -p test-results
           find . -type f -name "TEST-*.xml" -exec cp {} test-results/ \;
@@ -40,6 +41,7 @@ jobs:
 
       # Commit and push the updated test_data.json
       - name: Commit Test Data
+        if: ${{ always() }}
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
