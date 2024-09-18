@@ -2,9 +2,8 @@
 <html>
 <head>
   <title>Test Cases Statistics</title>
-  <!-- Include Chart.js -->
+  <!-- Include Chart.js and the date adapter -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- Include the date adapter for Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
 </head>
 <body>
@@ -12,23 +11,32 @@
   <nav>
     <a href="index.html">Suite Stats</a> | <a href="testcases.html">Test Case Stats</a>
   </nav>
-  
-  <!-- Time Period Selection -->
-  <label for="timePeriodSelect">Select Time Period:</label>
-  <select id="timePeriodSelect">
+
+  <!-- Unit Tests Section -->
+  <h2>Unit Tests</h2>
+  <label for="timePeriodSelectUnit">Select Time Period:</label>
+  <select id="timePeriodSelectUnit">
     <option value="Minute">Minute</option>
     <option value="Hour">Hour</option>
     <option value="Day">Day</option>
     <option value="Week">Week</option>
   </select>
-  
-  <!-- Test Case Filter -->
-  <input type="text" id="searchInput" placeholder="Filter test cases..." />
-  
-  <!-- Chart Canvas -->
-  <canvas id="testCasesChart" width="800" height="400"></canvas>
-  
-  <!-- Script Reference -->
+  <input type="text" id="searchInputUnit" placeholder="Filter unit test cases..." />
+  <canvas id="testCasesChartUnit" width="800" height="400"></canvas>
+
+  <!-- Android Tests Section -->
+  <h2>Android Tests</h2>
+  <label for="timePeriodSelectAndroid">Select Time Period:</label>
+  <select id="timePeriodSelectAndroid">
+    <option value="Minute">Minute</option>
+    <option value="Hour">Hour</option>
+    <option value="Day">Day</option>
+    <option value="Week">Week</option>
+  </select>
+  <input type="text" id="searchInputAndroid" placeholder="Filter android test cases..." />
+  <canvas id="testCasesChartAndroid" width="800" height="400"></canvas>
+
+  <!-- Include the script -->
   <script src="testcases.js"></script>
 </body>
 </html>

@@ -1,0 +1,29 @@
+{
+  "suites": [
+    {
+      "timestamp": "2024-09-18T23:04:50",
+      "tests": 1,
+      "passed": 0,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "time": 0.585,
+      "status": "failed",
+      "suite_name": "com.afzaln.githubmetricssample.ExampleInstrumentedTest",
+      "type": "androidTest"
+    }
+  ],
+  "cases": [
+    {
+      "timestamp": "2024-09-18T23:04:50",
+      "suite_name": "com.afzaln.githubmetricssample.ExampleInstrumentedTest",
+      "test_name": "useAppContext",
+      "classname": "com.afzaln.githubmetricssample.ExampleInstrumentedTest",
+      "status": "failed",
+      "time": 0.011,
+      "failure_type": "",
+      "failure_message": "org.junit.ComparisonFailure: expected:<com.afzaln.g[s]ithubmetricssample> but was:<com.afzaln.g[]ithubmetricssample>\nat org.junit.Assert.assertEquals(Assert.java:117)\nat org.junit.Assert.assertEquals(Assert.java:146)\nat com.afzaln.githubmetricssample.ExampleInstrumentedTest.useAppContext(ExampleInstrumentedTest.kt:22)\n",
+      "type": "androidTest"
+    }
+  ]
+}

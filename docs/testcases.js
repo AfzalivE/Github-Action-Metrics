@@ -6,12 +6,17 @@ const timePeriods = {
     'Week': 7 * 24 * 60 * 60 * 1000
   };
   
-  // Default time period
-  let selectedTimePeriod = 'Minute';
+  // Function to fetch and process data for a given test type
+  function fetchDataAndRenderChart(testType) {
+    const dataFile = testType === 'unitTest' ? 'unit_test_data.json' : 'android_test_data.json';
+    const timePeriodSelectId = testType === 'unitTest' ? 'timePeriodSelectUnit' : 'timePeriodSelectAndroid';
+    const searchInputId = testType === 'unitTest' ? 'searchInputUnit' : 'searchInputAndroid';
+    const chartCanvasId = testType === 'unitTest' ? 'testCasesChartUnit' : 'testCasesChartAndroid';
+    const chartInstanceName = testType === 'unitTest' ? 'testCasesChartUnitInstance' : 'testCasesChartAndroidInstance';
+    const allDatasetsName = testType === 'unitTest' ? 'allUnitDatasets' : 'allAndroidDatasets';
+    let selectedTimePeriod = 'Minute';
   
-  // Function to fetch and process data
-  function fetchDataAndRenderChart() {
-    fetch('test_data.json')
+    fetch(dataFile)
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -101,20 +106,20 @@ const timePeriods = {
         });
   
         // Store all datasets for filtering
-        window.allDatasets = datasets;
+        window[allDatasetsName] = datasets;
   
         // Limit the number of datasets displayed initially (e.g., top 5 test cases)
         const initialDatasets = getTopDatasets(datasets, 5);
   
         // Destroy existing chart if it exists and has a destroy method
-        if (window.testCasesChart && typeof window.testCasesChart.destroy === 'function') {
-          window.testCasesChart.destroy();
+        if (window[chartInstanceName] && typeof window[chartInstanceName].destroy === 'function') {
+          window[chartInstanceName].destroy();
         }
   
         // Configure the chart
-        const ctx = document.getElementById('testCasesChart').getContext('2d');
+        const ctx = document.getElementById(chartCanvasId).getContext('2d');
   
-        window.testCasesChart = new Chart(ctx, {
+        window[chartInstanceName] = new Chart(ctx, {
           type: 'line',
           data: {
             datasets: initialDatasets
@@ -188,17 +193,34 @@ const timePeriods = {
             }
           }
         });
+  
+        // Event listener for time period selection and search input
+        const timePeriodSelect = document.getElementById(timePeriodSelectId);
+        const searchInput = document.getElementById(searchInputId);
+  
+        timePeriodSelect.addEventListener('change', function(e) {
+          selectedTimePeriod = e.target.value;
+          fetchDataAndRenderChart(testType); // Re-fetch data with new time period
+        });
+  
+        searchInput.addEventListener('input', function(e) {
+          const searchTerm = e.target.value.toLowerCase();
+          // Filter datasets based on search term
+          const filteredDatasets = window[allDatasetsName].filter(dataset => dataset.label.toLowerCase().includes(searchTerm));
+          window[chartInstanceName].data.datasets = filteredDatasets;
+          window[chartInstanceName].update();
+        });
       })
       .catch(error => {
         console.error('Error loading test data:', error);
   
         // If a chart instance exists, destroy it
-        if (window.testCasesChart && typeof window.testCasesChart.destroy === 'function') {
-          window.testCasesChart.destroy();
+        if (window[chartInstanceName] && typeof window[chartInstanceName].destroy === 'function') {
+          window[chartInstanceName].destroy();
         }
   
         // Optionally, display an error message on the page
-        const chartContainer = document.getElementById('testCasesChart').parentNode;
+        const chartContainer = document.getElementById(chartCanvasId).parentNode;
         chartContainer.innerHTML = `<p>Error loading test data: ${error.message}</p>`;
       });
   }
@@ -244,25 +266,9 @@ const timePeriods = {
     return datasets.slice(0, topN);
   }
   
-  // Event listener for time period selection and search input
+  // Initial chart rendering
   document.addEventListener('DOMContentLoaded', function() {
-    const timePeriodSelect = document.getElementById('timePeriodSelect');
-    const searchInput = document.getElementById('searchInput');
-  
-    timePeriodSelect.addEventListener('change', function(e) {
-      selectedTimePeriod = e.target.value;
-      fetchDataAndRenderChart();
-    });
-  
-    searchInput.addEventListener('input', function(e) {
-      const searchTerm = e.target.value.toLowerCase();
-      // Filter datasets based on search term
-      const filteredDatasets = window.allDatasets.filter(dataset => dataset.label.toLowerCase().includes(searchTerm));
-      window.testCasesChart.data.datasets = filteredDatasets;
-      window.testCasesChart.update();
-    });
-  
-    // Initial chart rendering
-    fetchDataAndRenderChart();
+    fetchDataAndRenderChart('unitTest');
+    fetchDataAndRenderChart('androidTest');
   });
   

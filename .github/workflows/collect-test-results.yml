@@ -30,13 +30,48 @@ jobs:
         working-directory: ./android_project
         run: ./gradlew testDebugUnitTest
 
-      # Parse the test results
-      - name: Parse Test Results
-        if: ${{ always() }}
+      # Start emulator
+      - name: Start Android emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          target: default
+          arch: x86_64
+          profile: Nexus 6
+          emulator-options: '-no-boot-anim -no-window'
+          disable-animations: true
+
+      # Run your Android instrumented tests
+      - name: Run Instrumented Tests
+        id: instrumented_tests
+        if: success()
+        run: ./gradlew connectedDebugAndroidTest
+
+      # Copy unit test results
+      - name: Collect Unit Test Results
+        if: always()
         run: |
-          mkdir -p test-results
-          find . -type f -name "TEST-*.xml" -exec cp {} test-results/ \;
-          python parse_test_results.py docs/test_data.json
+          mkdir -p unit-test-results
+          find . -type f -name "TEST-*.xml" -path "*build/test-results*" -exec cp {} unit-test-results/ \;
+
+      # Copy androidTest results
+      - name: Collect Android Test Results
+        if: always()
+        run: |
+          mkdir -p android-test-results
+          find . -type f -name "TEST-*.xml" -path "*build/outputs/androidTest-results*" -exec cp {} android-test-results/ \;
+
+      # Parse unit test results
+      - name: Parse Unit Test Results
+        if: always()
+        run: |
+          python parse_test_results.py unit-test-results unitTest docs/unit_test_data.json
+
+      # Parse androidTest results
+      - name: Parse Android Test Results
+        if: always()
+        run: |
+          python parse_test_results.py android-test-results androidTest docs/android_test_data.json
 
       # Commit and push the updated test_data.json
       - name: Commit Test Data
@@ -44,7 +79,7 @@ jobs:
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
-          git add docs/test_data.json
+          git add docs/unit_test_data.json docs/android_test_data.json
           git commit -m "Update test data"
           git push
         env:
