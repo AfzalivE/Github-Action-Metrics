@@ -7,14 +7,13 @@ const timePeriods = {
   };
   
   // Function to fetch and process data for a given test type
-  function fetchDataAndRenderChart(testType) {
+  function fetchDataAndRenderChart(testType, selectedTimePeriod) {
     const dataFile = testType === 'unitTest' ? 'unit_test_data.json' : 'android_test_data.json';
     const timePeriodSelectId = testType === 'unitTest' ? 'timePeriodSelectUnit' : 'timePeriodSelectAndroid';
     const searchInputId = testType === 'unitTest' ? 'searchInputUnit' : 'searchInputAndroid';
     const chartCanvasId = testType === 'unitTest' ? 'testCasesChartUnit' : 'testCasesChartAndroid';
     const chartInstanceName = testType === 'unitTest' ? 'testCasesChartUnitInstance' : 'testCasesChartAndroidInstance';
     const allDatasetsName = testType === 'unitTest' ? 'allUnitDatasets' : 'allAndroidDatasets';
-    let selectedTimePeriod = 'Minute';
   
     fetch(dataFile)
       .then(response => {
@@ -200,7 +199,7 @@ const timePeriods = {
   
         timePeriodSelect.addEventListener('change', function(e) {
           selectedTimePeriod = e.target.value;
-          fetchDataAndRenderChart(testType); // Re-fetch data with new time period
+          fetchDataAndRenderChart(testType, selectedTimePeriod); // Re-fetch data with new time period
         });
   
         searchInput.addEventListener('input', function(e) {
@@ -268,7 +267,7 @@ const timePeriods = {
   
   // Initial chart rendering
   document.addEventListener('DOMContentLoaded', function() {
-    fetchDataAndRenderChart('unitTest');
-    fetchDataAndRenderChart('androidTest');
+    fetchDataAndRenderChart('unitTest', 'Minute');
+    fetchDataAndRenderChart('androidTest', 'Minute');
   });
   
