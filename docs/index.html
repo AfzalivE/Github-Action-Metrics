@@ -1,15 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Android Unit Test Results</title>
+  <title>Test Suite Results Over Time</title>
+  <!-- Include Chart.js and the date adapter -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
 </head>
 <body>
-  <h1>Android Unit Test Results Over Time</h1>
+  <h1>Test Suite Results Over Time</h1>
   <nav>
     <a href="index.html">Suite Stats</a> | <a href="testcases.html">Test Case Stats</a>
   </nav>
-  <canvas id="testResultsChart" width="800" height="400"></canvas>
+
+  <!-- Unit Tests Section -->
+  <h2>Unit Tests</h2>
+  <canvas id="unitTestChart" width="800" height="400"></canvas>
+
+  <!-- Android Tests Section -->
+  <h2>Android Tests</h2>
+  <canvas id="androidTestChart" width="800" height="400"></canvas>
+
+  <!-- Include the script -->
   <script src="script.js"></script>
 </body>
 </html>
