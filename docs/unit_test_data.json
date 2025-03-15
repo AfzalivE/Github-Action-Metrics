@@ -7875,6 +7875,18 @@
       "status": "passed",
       "suite_name": "com.afzaln.githubmetricssample.ExampleUnitTest",
       "type": "unitTest"
+    },
+    {
+      "timestamp": "2025-03-15T18:08:06",
+      "tests": 2,
+      "passed": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "time": 0.002,
+      "status": "passed",
+      "suite_name": "com.afzaln.githubmetricssample.ExampleUnitTest",
+      "type": "unitTest"
     }
   ],
   "cases": [
@@ -22325,6 +22337,28 @@
     },
     {
       "timestamp": "2025-03-15T12:10:07",
+      "suite_name": "com.afzaln.githubmetricssample.ExampleUnitTest",
+      "test_name": "addition_isCorrect",
+      "classname": "com.afzaln.githubmetricssample.ExampleUnitTest",
+      "status": "passed",
+      "time": 0.0,
+      "failure_type": "",
+      "failure_message": "",
+      "type": "unitTest"
+    },
+    {
+      "timestamp": "2025-03-15T18:08:06",
+      "suite_name": "com.afzaln.githubmetricssample.ExampleUnitTest",
+      "test_name": "addition_isWrong",
+      "classname": "com.afzaln.githubmetricssample.ExampleUnitTest",
+      "status": "passed",
+      "time": 0.001,
+      "failure_type": "",
+      "failure_message": "",
+      "type": "unitTest"
+    },
+    {
+      "timestamp": "2025-03-15T18:08:06",
       "suite_name": "com.afzaln.githubmetricssample.ExampleUnitTest",
       "test_name": "addition_isCorrect",
       "classname": "com.afzaln.githubmetricssample.ExampleUnitTest",
